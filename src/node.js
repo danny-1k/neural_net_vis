@@ -1,4 +1,5 @@
 import { createSVGEL } from "./utils.js";
+import Synapse from "./synapse.js";
 
 function Node(layer,x,y,radius){
     this.x = x;
@@ -19,6 +20,66 @@ function Node(layer,x,y,radius){
 
 
 };
+
+
+Node.prototype = {
+
+    setValue:function (value){
+
+        this.value = value;
+
+    },
+
+    render: function(){
+
+        this.layer.root.appendChild(this.el);
+
+    },
+
+    connect: function(node,color='blue'){
+
+        this.layer.synapses.push(new Synapse(this,node,color));
+
+
+    },
+
+    changeColor(color){
+        this.el.setAttribute('fill',color);
+
+    },
+
+    changeOutlineColor(color){
+        this.el.setAttribute('stroke',color);
+
+    },
+
+    addStyleProp: function(prop,value){
+        while(prop.includes('-')){
+            const hyphen_pos = prop.indexOf('-');
+            prop[hyphen_pos+1] = prop[hyphen_pos+1].toLocaleUpperCase();
+            prop = prop.replace('-','');
+        };
+        eval(`this.el.style.${prop} = "${value}"`); // this assumes `prop` is in camel casing
+    },
+
+    zeroValue: function(){
+        this.setValue(0);
+    },
+
+    zeroGrad: function(){
+        this.grad = 0;
+    },
+
+    setValue: function(value){
+        this.value = value;
+    },
+
+    equals: function(node){
+        return (this.x == node.x) && (this.y == node.y) ;
+
+    }
+
+}
 
 
 
