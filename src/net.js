@@ -1,5 +1,6 @@
 import { createSVG } from "./utils.js";
 import Layer from "./layer.js";
+import * as activations from "./activations.js";
 
 function Net(root,width,height,structure){
 
@@ -72,9 +73,13 @@ Net.prototype = {
                     idx: i,
                     is_input_layer:i==0,
                     is_output_layer:i==this.structure.length-1,
-                }
+                };
 
-                this.layers.push(new Layer(this,no_in, no_out, params));
+                const layer_activation = !params.is_output_layer?
+                new activations.ReLU() :
+                 new activations.Sigmoid();
+
+                this.layers.push(new Layer(this,no_in, no_out,layer_activation, params));
         
             };
 
