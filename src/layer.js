@@ -9,7 +9,7 @@ function Layer(net ,no_in,no_out,activation,params){
     this.activation = activation;
     this.params = params;
 
-    this.num_nodes = this.params.is_input_layer ? this.no_in: this.no_out;
+    this.num_nodes = this.no_in;
 
     this.nodes = [];
 
@@ -43,9 +43,9 @@ function Layer(net ,no_in,no_out,activation,params){
 
     if (this.params.idx != this.net.layers.length-1 && this.params.idx>=1){
 
-        for (let i=0; i< this.net.layers[this.params.idx-1].no_in; i++){
+        for (let i=0; i< this.net.layers[this.params.idx-1].num_nodes; i++){
 
-            for (let j=0; j< this.no_out; j++){
+            for (let j=0; j< this.num_nodes; j++){
 
 
                 this.net.layers[this.params.idx-1].nodes[i].connect(this.nodes[j]);
