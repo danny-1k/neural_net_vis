@@ -1,4 +1,4 @@
-import Node from "./node.js"; // lmaoooooo
+import Node from "./src/node.js"; // lmaoooooo
 
 
 function Layer(net ,no_in,no_out,activation,params){
