@@ -1,4 +1,4 @@
-import Node from "./src/node.js"; // lmaoooooo
+import Node from "./node.js"; // lmaoooooo
 
 
 function Layer(net ,no_in,no_out,activation,params){
@@ -40,4 +40,71 @@ function Layer(net ,no_in,no_out,activation,params){
 
     };
 
-}
+
+    if (this.params.idx != this.net.layers.length-1 && this.params.idx>=1){
+
+        for (let i=0; i< this.net.layers[this.params.idx-1].no_in; i++){
+
+            for (let j=0; j< this.no_out; j++){
+
+
+                this.net.layers[this.params.idx-1].nodes[i].connect(this.nodes[j]);
+    
+            };
+        };
+
+    };
+
+};
+
+Layer.prototype = {
+
+    render: function(){
+
+        for(let i=0; i< this.nodes.length; i++){
+            this.nodes[i].render();
+        };
+
+        for(let i=0; i< this.synapses.length; i++){
+            this.synapses[i].render();
+        };
+
+    },
+
+    forward: function(){
+
+        let out_nodes = [];
+
+        for (let i=0; i<this.nodes.length;i++){
+            const node = this.nodes[i];
+
+            if(i == 0){
+                for(let j=0; j<this.synapses.length; j++){
+
+                    const synapse = this.synapses.length;
+
+                    if(synapse.node1.equals(node)){
+                        out_nodes.push(synapse.node2);  
+                        this.out[out_nodes.length-1] = this.activation.forward(node.value * synapse.weight);
+
+                    };
+
+                };
+            };
+
+        }
+
+
+    },
+
+    backward: function(){
+
+    },
+
+    zero_values: function(){
+
+    },
+
+};
+
+export default Layer;
