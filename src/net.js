@@ -1,5 +1,5 @@
 import { createSVG } from "./utils.js";
-// import Layer from "./layer.js";
+import Layer from "./layer.js";
 
 function Net(root,width,height,structure){
 
@@ -41,7 +41,7 @@ function Net(root,width,height,structure){
     this.el.setAttribute('height',height);
 
     
-    // this.createLayers();
+    this.createLayers();
 
 };
 
@@ -92,7 +92,7 @@ Net.prototype = {
         eval(`this.el.style.${prop} = "${value}"`); // this assumes `prop` is in camel casing
     },
 
-    
+
 };
 
 
