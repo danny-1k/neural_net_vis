@@ -47,13 +47,13 @@ function Layer(net ,no_in,no_out,activation,params){
 
             for (let j=0; j< this.num_nodes; j++){
 
-
                 this.net.layers[this.params.idx-1].nodes[i].connect(this.nodes[j]);
     
             };
         };
 
     };
+
 
 };
 
@@ -81,7 +81,7 @@ Layer.prototype = {
             if(i == 0){
                 for(let j=0; j<this.synapses.length; j++){
 
-                    const synapse = this.synapses.length;
+                    const synapse = this.synapses[j];
 
                     if(synapse.node1.equals(node)){
                         out_nodes.push(synapse.node2);  
@@ -92,7 +92,9 @@ Layer.prototype = {
                 };
             };
 
-        }
+        };
+
+        return this.out;
 
 
     },
@@ -102,6 +104,11 @@ Layer.prototype = {
     },
 
     zero_values: function(){
+
+        for (let i =0; i< this.nodes.length; i++){
+
+            this.nodes[i].zeroValue();
+        };
 
     },
 
