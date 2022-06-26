@@ -21,6 +21,8 @@ ReLU.prototype = {
             };
         };
 
+        return this.out;
+
     },
 
     backward: function(grad){
@@ -87,6 +89,8 @@ Sigmoid.prototype = {
 
             };
         };
+
+        return this.out;
 
     },
 
