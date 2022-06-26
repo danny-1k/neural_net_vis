@@ -22,7 +22,7 @@ Synapse.prototype = {
 
     initializeWeight: function (mu=0,sigma=1){
 
-        this.weight = Math.random()/2;
+        this.weight = Math.random()**.5;
 
     },
 
