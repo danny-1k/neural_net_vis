@@ -98,6 +98,70 @@ Net.prototype = {
     },
 
 
+    forward(x){
+
+        if (x.length == this.structure[0]){ // check for right input dimensions
+
+        }else{
+            throw new Error(`array passed into forward call must have a length of ${this.structure[0]}`)
+        }
+
+        for(let i=0; i<x.length; i++){
+            // clear the values of the nodes in the layers
+            // and set the  values in the input layer.
+            for(let i=0; i< this.layers.length; i++){
+                this.layers[i].zero_values();
+
+                if (i== 0){ // input layer
+
+                    const input_layer = this.layers[i];
+
+                    for(let j=0; j< input_layer.nodes.length;j++){
+
+                        input_layer.nodes[j].setValue(x[j]); // set input value
+
+                    };
+
+                };
+            };
+
+        };
+
+
+        // forward pass for reallie
+
+        for(let i=0;i<this.layers.length; i++){
+
+            const layer = this.layers[i];
+
+            if (i == 0){
+                
+                x = layer.forward(); // we've already set the values of the nodes of the input layer
+
+            }else{ 
+                // the values of the other layers have to be set and the other values computed...
+
+                for(let j=0; j< layer.num_nodes;j++){
+                    layer.nodes[j].setValue(x[j]); // set input value
+                    if (!layer.params.is_output_layer){
+                        x = layer.forward();
+
+                    };
+
+                };
+
+
+            }
+
+
+
+        };
+
+        return x;
+
+    },
+
+
 };
 
 
