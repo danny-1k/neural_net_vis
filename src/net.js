@@ -75,9 +75,15 @@ Net.prototype = {
                     is_output_layer:i==this.structure.length-1,
                 };
 
-                const layer_activation = !params.is_output_layer?
-                new activations.ReLU() :
-                 new activations.Sigmoid();
+                let layer_activation;
+
+                if (params.is_output_layer){
+                    layer_activation = new activations.Linear();
+                }else if (params.idx == 2){
+                    layer_activation = new activations.Sigmoid();
+                }else{
+                    layer_activation = new activations.ReLU();
+                };
 
                 this.layers.push(new Layer(this,no_in, no_out,layer_activation, params));
         
@@ -106,24 +112,27 @@ Net.prototype = {
             throw new Error(`array passed into forward call must have a length of ${this.structure[0]}`)
         }
 
-        for(let i=0; i<x.length; i++){
+        for(let i=0; i<this.layers.length; i++){
             // clear the values of the nodes in the layers
             // and set the  values in the input layer.
-            for(let i=0; i< this.layers.length; i++){
-                this.layers[i].zero_values();
 
-                if (i== 0){ // input layer
+            this.layers[i].zero_values();
 
-                    const input_layer = this.layers[i];
+            if (i== 0){ // input layer
 
-                    for(let j=0; j< input_layer.nodes.length;j++){
+                // in the input layer, set the value of the nodes to
+                // the integers passed in as x;
 
-                        input_layer.nodes[j].setValue(x[j]); // set input value
+                const input_layer = this.layers[i];
 
-                    };
+                for(let j=0; j< input_layer.nodes.length;j++){
+
+                    input_layer.nodes[j].setValue(x[j]); // set input value
 
                 };
+
             };
+
 
         };
 
@@ -135,29 +144,42 @@ Net.prototype = {
             const layer = this.layers[i];
 
             if (i == 0){
-                
+
                 x = layer.forward(); // we've already set the values of the nodes of the input layer
-
+    
             }else{ 
-                // the values of the other layers have to be set and the other values computed...
+                    // the values of the other layers have to be set and the other values computed...
 
-                for(let j=0; j< layer.num_nodes;j++){
-                    layer.nodes[j].setValue(x[j]); // set input value
-                    if (!layer.params.is_output_layer){
-                        x = layer.forward();
+                
+                    for(let j=0; j< layer.nodes.length;j++){
 
-                    };
-
+                    layer.nodes[j].value = x[j]; // set input value
                 };
 
+                if (!layer.params.is_output_layer){
+                    x = layer.forward();
 
-            }
+                }
 
 
+            };
+    
+            
 
         };
 
         return x;
+
+    },
+    
+    backward: function(grad){
+
+
+        for (let i = this.layers.length-1; i>=0; i--){
+
+            const layer = this.layers[i];
+            grad = layer.backward(grad);
+        };
 
     },
 
