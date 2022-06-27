@@ -73,6 +73,7 @@ Layer.prototype = {
 
     forward: function(){
 
+
         let out_nodes = [];
 
         for (let i=0; i<this.nodes.length;i++){
@@ -85,14 +86,37 @@ Layer.prototype = {
 
                     if(synapse.node1.equals(node)){
                         out_nodes.push(synapse.node2);  
-                        this.out[out_nodes.length-1] = this.activation.forward(node.value * synapse.weight);
+                        this.out[out_nodes.length-1] = node.value * synapse.weight;
+
 
                     };
 
                 };
-            };
+
+            }else{
+
+                for (let j=0; j< this.synapses.length; j++){
+
+                    const synapse = this.synapses[j];
+
+                    if (synapse.node1.equals(node)){
+
+                        for (let k=0; k< out_nodes.length; k++){
+                            if (out_nodes[k].equals(synapse.node2)){
+
+                                this.out[k] += node.value * synapse.weight;
+
+                            };
+                        };
+
+                    }
+                }
+
+            }
 
         };
+
+        this.out = this.activation.forward(this.out);
 
         return this.out;
 
@@ -100,6 +124,8 @@ Layer.prototype = {
     },
 
     backward: function(){
+
+        // implement backprop
 
     },
 
