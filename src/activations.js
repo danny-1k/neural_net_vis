@@ -9,7 +9,7 @@ ReLU.prototype = {
     forward: function(x){
         this.out = typeof x == "number"? 0: [];
 
-        if(this.out == 0){
+        if(typeof this.out  == "number"){
 
             this.out = this.forward_func(x);
         
@@ -78,9 +78,9 @@ function Sigmoid(){
 
 Sigmoid.prototype = {
     forward: function(x){
-        this.out = typeof x == "number"? 0: [];
+        this.out = (typeof x) == "number"? 0: [];
 
-        if(this.out == 0){
+        if(typeof this.out  == "number"){
 
             this.out = this.forward_func(x);
         
@@ -151,7 +151,7 @@ Linear.prototype = {
     forward: function(x){
         this.out = typeof x == "number"? 0: [];
 
-        if(this.out == 0){
+        if(typeof this.out  == "number"){
 
             this.out = this.forward_func(x);
         
