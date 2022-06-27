@@ -22,7 +22,7 @@ Synapse.prototype = {
 
     initializeWeight: function (mu=0,sigma=1){
 
-        this.weight = Math.random()**.5;
+        this.weight = Math.random()/2;
 
     },
 
@@ -36,7 +36,7 @@ Synapse.prototype = {
         this.el = line;
 
         line.setAttribute('stroke', this.color);
-        line.setAttribute('stroke-width', 1);
+        line.setAttribute('stroke-width', 2);
 
         line.setAttribute('x1', x1+this.layer.net.node_radius);
         line.setAttribute('y1', y1);
