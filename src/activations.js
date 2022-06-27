@@ -32,7 +32,6 @@ ReLU.prototype = {
         if (typeof grad == "number"){
 
             this.grad = grad*this.backward_func(this.x);
-            return this.grad;
 
         }else{
 
@@ -44,6 +43,9 @@ ReLU.prototype = {
             
             };
         };
+
+        return this.grad;
+
 
     },
 
@@ -101,7 +103,6 @@ Sigmoid.prototype = {
         if (typeof grad == "number"){
 
             this.grad = grad*this.backward_func(this.x);
-            return this.grad;
 
         }else{
 
@@ -113,6 +114,9 @@ Sigmoid.prototype = {
             
             };
         };
+
+        return this.grad;
+
 
     },
 
