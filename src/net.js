@@ -139,34 +139,20 @@ Net.prototype = {
 
         // forward pass for reallie
 
+        let layer;
+        // let x;
+
         for(let i=0;i<this.layers.length; i++){
 
-            const layer = this.layers[i];
+            layer = this.layers[i];
+            x = layer.forward();
 
-            if (i == 0){
-
-                x = layer.forward(); // we've already set the values of the nodes of the input layer
-    
-            }else{ 
-                    // the values of the other layers have to be set and the other values computed...
-
-                
-                    for(let j=0; j< layer.nodes.length;j++){
-
-                    layer.nodes[j].value = x[j]; // set input value
-                };
-
-                if (!layer.params.is_output_layer){
-                    x = layer.forward();
-
-                }
-
-
-            };
-    
-            
 
         };
+
+        // in the output layer (the last layer),
+        // the predictions are not stored in 'this.out' but
+        // in the values of the nodes in the layer.
 
         return x;
 
