@@ -73,57 +73,67 @@ Layer.prototype = {
 
     forward: function(){
 
+        if (this.params.is_output_layer){
 
-        let out_nodes = [];
+            // output layer is special 
+            // since it doesn't have synapses(connecting to the next layer)
+            // it can't really have a  `this.out` without manually assigning that.
+            // the output layer in this case is just for the sake of visualization.
 
-        for (let i=0; i<this.nodes.length;i++){
-            const node = this.nodes[i];
+            this.out = this.activation.forward(this.nodes.map(node=>{return node.value}));
 
-            if(i == 0){
-                for(let j=0; j<this.synapses.length; j++){
+        }else{
 
-                    const synapse = this.synapses[j];
+            for(let i=0; i<this.nodes.length;i++){
 
-                    if(synapse.node1.equals(node)){
-                        out_nodes.push(synapse.node2);  
-                        this.out[out_nodes.length-1] = node.value * synapse.weight;
-
-
-                    };
-
-                };
-
-            }else{
-
+                const node = this.nodes[i];
+    
                 for (let j=0; j< this.synapses.length; j++){
-
+    
                     const synapse = this.synapses[j];
+    
+                    if(synapse.node1 == node){
+                        synapse.node2.value += node.value * synapse.weight;
+    
+                    };
+    
+                };
+    
+            };
 
-                    if (synapse.node1.equals(node)){
 
-                        for (let k=0; k< out_nodes.length; k++){
-                            if (out_nodes[k].equals(synapse.node2)){
+            this.out = this.net.layers[this.params.idx+1].nodes.map(node => {
+                return node.value;
+            });
 
-                                this.out[k] += node.value * synapse.weight;
+            // pass output through activation function
+            this.out = this.activation.forward(this.out);
 
-                            };
-                        };
 
-                    }
-                }
+            // replace the values of the nodes in the next layer with the 'activated' output
 
-            }
+            for (let i=0; i< this.out.length; i++){
+
+                this.net.layers[this.params.idx+1].nodes[i].value = this.out[i]
+
+
+            };
+
 
         };
-
-        this.out = this.activation.forward(this.out);
 
         return this.out;
 
 
     },
 
-    backward: function(){
+    backward: function(grad){
+        let grad_x = [];
+        let grad_w = [];
+
+        
+
+
 
         // implement backprop
 
