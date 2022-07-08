@@ -37,7 +37,6 @@ MSE.prototype = {
         if (typeof this.loss == "number"){
 
             const grad = 2*(this.x-this.y);
-            this.net.backward(grad);
 
         }else if(typeof this.x == "object"){
 
@@ -56,6 +55,11 @@ MSE.prototype = {
 
 
         };
+
+        this.net.backward(grad);
+
+
+
 
     },
 };
