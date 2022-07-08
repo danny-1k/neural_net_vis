@@ -78,8 +78,6 @@ Net.prototype = {
                 let layer_activation;
 
                 if (params.is_output_layer){
-                    layer_activation = new activations.Linear();
-                }else if (params.idx == 2){
                     layer_activation = new activations.Sigmoid();
                 }else{
                     layer_activation = new activations.ReLU();
