@@ -34,13 +34,15 @@ MSE.prototype = {
 
     backward: function(){
 
+        let grad; 
+
         if (typeof this.loss == "number"){
 
-            const grad = 2*(this.x-this.y);
+            grad = 2*(this.x-this.y);
 
         }else if(typeof this.x == "object"){
 
-            const grad = [];
+            grad = [];
 
             for (let i=0; i<this.x.length; i++){
 
@@ -49,7 +51,7 @@ MSE.prototype = {
             };
 
             for (let i=0; i< grad.length; i++){
-                grad[i] *= .5; // divifing by 1/2
+                grad[i] *= .5; // divifing by 2
             };
 
 
