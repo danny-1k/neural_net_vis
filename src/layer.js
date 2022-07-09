@@ -93,7 +93,7 @@ Layer.prototype = {
                     const synapse = this.synapses[j];
     
                     if(synapse.node1 == node){
-                        synapse.node2.value += node.value * synapse.weight;
+                        synapse.node2.setValue(synapse.node2.value+(node.value * synapse.weight));
     
                     };
     
@@ -114,7 +114,7 @@ Layer.prototype = {
 
             for (let i=0; i< this.out.length; i++){
 
-                this.net.layers[this.params.idx+1].nodes[i].value = this.out[i]
+                this.net.layers[this.params.idx+1].nodes[i].setValue(this.out[i]);
 
 
             };
