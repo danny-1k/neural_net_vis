@@ -31,7 +31,7 @@ ReLU.prototype = {
 
         if (typeof grad == "number"){
 
-            this.grad = grad*this.backward_func(this.x);
+            this.grad = grad*this.backward_func(this.out);
 
         }else{
 
@@ -39,7 +39,7 @@ ReLU.prototype = {
 
             for (let i=0; i<grad.length; i++){
 
-                this.grad[i] = grad[i]*this.backward_func(this.x[i]);
+                this.grad[i] = grad[i]*this.backward_func(this.out[i]);
             
             };
         };
@@ -102,17 +102,30 @@ Sigmoid.prototype = {
 
         if (typeof grad == "number"){
 
-            this.grad = grad*this.backward_func(this.x);
+            this.grad = grad*this.backward_func(this.out);
 
         }else{
 
             this.grad = [];
 
-            for (let i=0; i<grad.length; i++){
+            for(let i=0; i<this.out.length;i++){
+                let sum = 0;
 
-                this.grad[i] = grad[i]*this.backward_func(this.x[i]);
-            
+                for(let j=0; j<grad.length;j++){
+
+                    sum+=grad[j]*this.backward_func(this.out[i]);
+                };
+
+                this.grad.push(sum);
+
+
             };
+
+            // for (let i=0; i<grad.length; i++){
+
+            //     this.grad[i] = grad[i]*this.backward_func(this.out[i]);
+            
+            // };
         };
 
         return this.grad;
@@ -173,7 +186,7 @@ Linear.prototype = {
 
         if (typeof grad == "number"){
 
-            this.grad = grad*this.backward_func(this.x);
+            this.grad = grad*this.backward_func(this.out);
             return this.grad;
 
         }else{
@@ -182,7 +195,7 @@ Linear.prototype = {
 
             for (let i=0; i<grad.length; i++){
 
-                this.grad[i] = grad[i]*this.backward_func(this.x[i]);
+                this.grad[i] = grad[i]*this.backward_func(this.out[i]);
             
             };
         };
