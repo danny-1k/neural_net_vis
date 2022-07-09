@@ -36,7 +36,7 @@ Synapse.prototype = {
         this.el = line;
 
         line.setAttribute('stroke', this.color);
-        line.setAttribute('stroke-width', 2);
+        line.setAttribute('stroke-width', 3);
 
         line.setAttribute('x1', x1+this.layer.net.node_radius);
         line.setAttribute('y1', y1);
