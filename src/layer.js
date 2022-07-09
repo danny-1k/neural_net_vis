@@ -198,9 +198,30 @@ Layer.prototype = {
 
     },
 
+
     step: function(lr){
 
+        if (this.params.idx != 0){
+
+            const layer = this.net.layers[this.params.idx-1];
+
+
+            for (let i=0; i< layer.synapses.length; i++){
+
+                const synapse = layer.synapses[i];
+
+                synapse.weight-= lr*layer.grad[i];
+
+                synapse.updateSynapse();
+
+            };
+
+
+        };
+
     },
+        
+
 
 };
 
