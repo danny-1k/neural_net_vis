@@ -25,5 +25,8 @@ const createCircle = (cx,cy,r,fill) =>{
 
 };
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
-export {createSVG, createSVGEL, createCircle};
+
+
+export {createSVG, createSVGEL, createCircle, delay};
