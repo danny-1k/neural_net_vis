@@ -12,9 +12,7 @@ Optimizer.prototype = {
 
     step: function(){
 
-    },
-
-    zero_grad: function(){
+        this.net.layers.forEach(layer=>layer.step(this.lr));
 
     },
 
