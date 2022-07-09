@@ -162,6 +162,7 @@ Net.prototype = {
         for (let i = this.layers.length-1; i>=0; i--){
 
             const layer = this.layers[i];
+            grad = (typeof grad == 'number')?[grad]:grad;
             grad = layer.backward(grad);
         };
 
