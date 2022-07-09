@@ -8,6 +8,8 @@ function Node(layer,x,y,radius){
     this.layer = layer;
 
     this.el = createSVGEL('circle');
+    this.text = createSVGEL('text');
+    
     this.el.setAttribute('cx', this.x);
     this.el.setAttribute('cy', this.y);
     this.el.setAttribute('r', this.radius);
@@ -18,21 +20,32 @@ function Node(layer,x,y,radius){
     this.value = 0;
     this.grad = 0;
 
+    this.text.setAttribute('x', this.x-(8*5*.5)); // horizontally center text
+    this.text.setAttribute('y', this.y+4); // vertically center text
+    this.text.innerHTML = this.value;
+
+
 
 };
 
 
 Node.prototype = {
 
-    setValue:function (value){
+    // setValue:function (value){
 
-        this.value = value;
+    //     this.value = value;
 
-    },
+    // },
+
+    
 
     render: function(){
 
         this.layer.root.appendChild(this.el);
+        this.layer.root.appendChild(this.text);
+
+
+
 
     },
 
@@ -72,7 +85,9 @@ Node.prototype = {
 
     setValue: function(value){
         this.value = value;
+        this.text.innerHTML = value.toFixed(5);
     },
+
 
     equals: function(node){
         return (this.x == node.x) && (this.y == node.y) ;
