@@ -52,6 +52,11 @@ Synapse.prototype = {
 
     },
 
+    updateSynapse: function(){
+        this.addStyleProp('opacity',this.weight);
+
+    },
+
     addStyleProp: function(prop,value){
         while(prop.includes('-')){
             const hyphen_pos = prop.indexOf('-');
