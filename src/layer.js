@@ -125,17 +125,67 @@ Layer.prototype = {
         return this.out;
 
 
+
     },
 
     backward: function(grad){
+
         let grad_x = [];
         let grad_w = [];
+        let grad_out_w = [];
 
-        
+        if (this.params.idx != 0){
+
+            const layer = this.net.layers[this.params.idx-1];
+
+            layer.synapses.forEach(synapse=>{
+
+                for (let j=0; j< grad.length; j++){
+
+                    if (synapse.node2 == this.nodes[j]){
+
+                        grad_out_w.push(grad[j]);
+
+                    };
+
+                };
+
+            });
 
 
+            layer.nodes.forEach(node=>{
 
-        // implement backprop
+                let sum = 0;
+
+                let node_weights=[];
+
+                for (let i=0; i<layer.synapses.length;i++){
+                    
+                    if (layer.synapses[i].node1 == node){
+                            node_weights.push(layer.synapses[i].weight);
+                    };
+
+                };
+
+                for (let i=0; i< grad.length;i++){
+
+                    sum += grad[i]*node_weights[i];
+
+                };
+
+                grad_x.push(sum);
+            });
+
+
+            grad_w =  layer.activation.backward(grad_out_w);
+
+            layer.grad = grad_w;
+            
+            return grad_x;
+
+
+        }
+
 
     },
 
@@ -145,6 +195,10 @@ Layer.prototype = {
 
             this.nodes[i].zeroValue();
         };
+
+    },
+
+    step: function(lr){
 
     },
 
